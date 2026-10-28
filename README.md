@@ -30,10 +30,10 @@ These instructions require a suitable CUDA environment, the dependencies listed 
 
 | File | JSONL rows | Ordered complete models | Size (MiB) |
 |---|---:|---:|---:|
-| `finetune_data_3d_train.jsonl` | 18,000 | 450 | 46.36 |
-| `finetune_data_3d_validation.jsonl` | 2,000 | 50 | 5.16 |
-| `finetune_data_3d_test.jsonl` | 4,000 | 100 | 10.29 |
-| `instruction_input_largerscale.jsonl` | 60 | 1 | 0.07 |
+| `database/finetune_data_3d_train.jsonl` | 18,000 | 450 | 46.36 |
+| `database/finetune_data_3d_validation.jsonl` | 2,000 | 50 | 5.16 |
+| `database/finetune_data_3d_test.jsonl` | 4,000 | 100 | 10.29 |
+| `inference4largescale/instruction_input_largerscale.jsonl` | 60 | 1 | 0.07 |
 
 The first three files are the author's supplied training/validation/test splits. They are loaded directly, without another random split. Engineering input has instruction/input fields only. Model counts above describe complete ordered slice blocks; they do not prove cross-split statistical independence or recover historical IDs.
 
@@ -47,7 +47,7 @@ The first three files are the author's supplied training/validation/test splits.
 
 The model identifiers can also be overridden through `GEOMODEL_BASE_MODEL` and `GEOMODEL_ADAPTER`. The base is loaded explicitly so a legacy private base path in adapter metadata is not used to discover it. After training, the same notebook session selects the newly saved local adapter.
 
-`GEOMODEL_ROOT` overrides the repository root; `GEOMODEL_DATA_DIR` overrides the directory containing the four JSONL files. Outputs are saved under `outputs/inference`. Synthetic output numbering starts at 001 in the order of this supplied test file and does not imply the old model IDs. No reference cubes or metrics are written.
+`GEOMODEL_ROOT` overrides the repository root; `GEOMODEL_DATA_DIR` overrides the data root containing the `database` and `inference4largescale` subdirectories. Outputs are saved under `outputs/inference`. Synthetic output numbering starts at 001 in the order of this supplied test file and does not imply the old model IDs. No reference cubes or metrics are written.
 
 The main training settings are retained: 4-bit base loading, LoRA r=64/alpha=128/dropout=0, batch size 8, accumulation 8, two epochs, learning rate 2e-4, seed 3407, and response-only loss. Standard inference uses greedy decoding with batches of 40 and max_new_tokens=4000; engineering inference uses batches of 20 and max_new_tokens=8000. Both retain the 2048-token input cap and the original 4000-token model loading setting; their compatibility with the actual model/runtime must be checked on the target GPU environment.
 
