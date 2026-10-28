@@ -9,6 +9,7 @@ venv/
 wandb/
 outputs/
 *.npy
+!inference4largescale/*.npy
 *.npz
 *.safetensors
 *.bin
