@@ -1,0 +1,11 @@
+# Unpinned dependency list; install CUDA-compatible PyTorch and Unsloth.
+# Confirm exact versions from the original training environment.
+torch
+unsloth
+transformers
+datasets
+trl
+peft
+accelerate
+bitsandbytes
+numpy
